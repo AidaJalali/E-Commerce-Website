@@ -1,4 +1,4 @@
-# 🛍 Django E-Commerce Website  
+# 🛍 Django E-Commerce Website (Gilan Products Theme)
 A simple e-commerce website built with **Django**, allowing users to browse products, add items to their cart, and place orders (without payment integration).  
 
 ---
