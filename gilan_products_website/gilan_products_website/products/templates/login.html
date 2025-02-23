@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Log In - Gilan Products{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="row">
+    <div class="col-md-14 col-lg-10 offset-lg-2">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4 text-success">Log In to Your Account</h2>
+         
+          <!-- Display errors (if any) -->
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              <ul class="m-0">
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+                {% if form.username.errors %}
+                  {% for error in form.username.errors %}
+                    <li>Username: {{ error }}</li>
+                  {% endfor %}
+                {% endif %}
+                {% if form.password.errors %}
+                  {% for error in form.password.errors %}
+                    <li>Password: {{ error }}</li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <!-- Authentication Form -->
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Username Field -->
+            <div class="mb-3">
+              <label for="id_username" class="form-label">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="id_username"
+                class="form-control"
+                value="{{ form.username.value|default_if_none:'' }}"
+                required
+              />
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+              <label for="id_password" class="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="id_password"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn w-100 btn-success">Log In</button>
+          </form>
+        </div>
+
+        <div class="card-footer text-center">
+          <small>
+            Don’t have an account?
+            <a href="{% url 'signup' %}" class="text-success">Sign up here</a>.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

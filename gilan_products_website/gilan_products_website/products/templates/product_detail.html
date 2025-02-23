@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            {% if product.image %}
+              <!-- Product image on the left -->
+              <img
+                src="{{ product.image.url }}"
+                class="img-thumbnail me-3"
+                style="max-width: 150px; object-fit: cover;"
+                alt="{{ product.name }}"
+              >
+            {% endif %}
+            <div>
+              <!-- Name & Category -->
+              <h2 class="card-title mb-1">{{ product.name }}</h2>
+              <small class="text-muted">
+                Category: {{ product.category.name }}
+              </small>
+            </div>
+          </div>
+
+          <!-- Product Description -->
+          <p class="text-secondary mb-3">
+            {{ product.description }}
+          </p>
+          <!-- Product Price -->
+          <p class="fw-bold text-primary mb-4">
+            Price: ${{ product.price }}
+          </p>
+
+          <!-- Add to Cart Button & Form -->
+          <a href="{% url 'cart_view' %}"
+             class="btn btn-success"
+             onclick="event.preventDefault(); document.getElementById('add-to-cart-form').submit();">
+            Add to Cart
+          </a>
+          <form id="add-to-cart-form" method="post" action="{% url 'add_to_cart' product.id %}" class="d-none">
+            {% csrf_token %}
+          </form>
+
+          <hr>
+          <!-- Back to Products Button -->
+          <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">
+            Back to Products
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

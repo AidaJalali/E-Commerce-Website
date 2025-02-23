@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Gilan Products{% endblock %}</title>
+ 
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+ 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+  >
+ 
+  <!-- Custom styles -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ecf7ec;
+      margin: 0;
+      padding: 0;
+    }
+    /* Navbar with a natural green color scheme */
+    .navbar {
+      background-color: #295e29 !important;
+    }
+    .navbar-brand, .navbar-nav .nav-link, .btn-link {
+      color: #ffffff !important;
+    }
+    .nav-link:hover {
+      color: #d7ffc7 !important; /* lighter green on hover */
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      position: relative;
+      background-image: url("{% static 'products/images/masule.jpeg' %}");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+}
+      
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for contrast */
+    }
+    .hero-title {
+      position: relative;
+      font-size: 2.5rem;
+      font-weight: 700;
+      z-index: 2; /* Above overlay */
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+      margin: 0;
+      padding: 0 1rem;
+    }
+    .hero-subtitle {
+      position: relative;
+      z-index: 2;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      font-weight: 300;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+
+    /* Main content spacing */
+    .main-content {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Footer styling */
+    footer {
+      background-color: #295e29;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="{% url 'product_list' %}">Gilan Products</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      style="background-color: #fff;"
+    >
+      <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart_view' %}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <form class="nav-link m-0 p-0" method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="btn btn-link text-decoration-none" type="submit">Logout</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <div class="hero-overlay"></div>
+  <div>
+    <h1 class="hero-title">Experience the Beauty of Gilan</h1>
+    <p class="hero-subtitle">Explore our authentic products from Iran’s lush green paradise</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container main-content">
+  {% block content %}{% endblock %}
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="m-0">&copy; 2025 Gilan Products. Celebrating the natural beauty of Northern Iran.</p>
+</footer>
+
+<!-- Bootstrap 5 JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

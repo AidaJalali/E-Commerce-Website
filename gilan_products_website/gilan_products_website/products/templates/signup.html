@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up - Gilan Products{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="row">
+    <div class="col-md-14 col-lg-10 offset-lg-2">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4 text-success">Create Your Account</h2>
+         
+          <!-- Display any form-wide or field-specific errors -->
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              <ul class="m-0">
+                {# Non-field errors (e.g., password mismatch) #}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+                {# Field-specific errors #}
+                {% for field in form.visible_fields %}
+                  {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+            <div class="mb-3">
+              <label for="id_username" class="form-label">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="id_username"
+                class="form-control"
+                value="{{ form.username.value|default_if_none:'' }}"
+                required
+              />
+            </div>
+
+            <!-- PHONE NUMBER (if your form has this field) -->
+            <div class="mb-3">
+              <label for="id_phone_number" class="form-label">Phone Number</label>
+              <input
+                type="text"
+                name="phone_number"
+                id="id_phone_number"
+                class="form-control"
+                value="{{ form.phone_number.value|default_if_none:'' }}"
+              />
+              <small class="text-muted">Optional: Provide your phone if you'd like updates about orders.</small>
+            </div>
+
+            <!-- PASSWORD1 -->
+            <div class="mb-3">
+              <label for="id_password1" class="form-label">Password</label>
+              <input
+                type="password"
+                name="password1"
+                id="id_password1"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <!-- PASSWORD2 -->
+            <div class="mb-3">
+              <label for="id_password2" class="form-label">Confirm Password</label>
+              <input
+                type="password"
+                name="password2"
+                id="id_password2"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn w-100 btn-success">Sign Up</button>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <small>
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-success">Log in here</a>.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

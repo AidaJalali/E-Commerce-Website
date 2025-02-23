@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Logout - Gilan Products{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="card w-50 shadow-sm">
+    <div class="card-body text-center p-4">
+      <h2 class="mb-4 text-success">Are you sure you want to log out?</h2>
+     
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger px-4">Logout</button>
+        <a href="{% url 'product_list' %}" class="btn btn-secondary px-4 ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
